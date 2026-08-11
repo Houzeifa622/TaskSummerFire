@@ -38,6 +38,6 @@ class UrgentTask extends Task {
 
   @override
   String toString() {
-    return '${super.toString()} ⚠️ [Motif: $urgencyReason]';
+    return '${super.toString()} [Motif: $urgencyReason]';
   }
 }

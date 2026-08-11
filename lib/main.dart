@@ -9,10 +9,6 @@ void main() async {
   final repo = JsonTaskRepository('tasks.json');
   final manager = TaskManager(repo);
 
-  print('========================================');
-  print('     GESTIONNAIRE DE TÂCHES (CLI)      ');
-  print('========================================');
-
   while (true) {
     print('\nMenu:');
     print('1. Ajouter une tâche');
@@ -49,9 +45,9 @@ void main() async {
           print('Option invalide.');
       }
     } on TaskException catch (e) {
-      print('❌ Erreur : ${e.message}');
+      print('Erreur : ${e.message}');
     } catch (e) {
-      print('❌ Erreur inattendue : $e');
+      print('Erreur inattendue : $e');
     }
   }
 }
