@@ -15,6 +15,7 @@ abstract class Task {
     this.isCompleted = false,
   });
 
+  // Méthode abstraite pour déterminer l'urgence métier
   bool get isUrgent;
 
   Map<String, dynamic> toJson();
