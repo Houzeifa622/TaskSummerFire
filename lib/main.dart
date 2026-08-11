@@ -10,13 +10,13 @@ void main() async {
   final manager = TaskManager(repo);
 
   while (true) {
-    print('\nMenu:');
-    print('1. Ajouter une tâche');
-    print('2. Lister les tâches (par Priorité)');
-    print('3. Lister les tâches (par Date d\'échéance)');
-    print('4. Marquer une tâche comme terminée');
-    print('5. Supprimer une tâche');
-    print('6. Quitter');
+    stdout.writeln('\nMenu:');
+    stdout.writeln('1. Ajouter une tâche');
+    stdout.writeln('2. Lister les tâches (par Priorité)');
+    stdout.writeln('3. Lister les tâches (par Date d\'échéance)');
+    stdout.writeln('4. Marquer une tâche comme terminée');
+    stdout.writeln('5. Supprimer une tâche');
+    stdout.writeln('6. Quitter');
     stdout.write('\nChoix > ');
 
     final choice = stdin.readLineSync()?.trim();
@@ -39,15 +39,15 @@ void main() async {
           await _deleteTaskFlow(manager);
           break;
         case '6':
-          print('\nAu revoir !');
+          stdout.writeln('\nAu revoir !');
           exit(0);
         default:
-          print('Option invalide.');
+          stdout.writeln('Option invalide.');
       }
     } on TaskException catch (e) {
-      print('Erreur : ${e.message}');
+      stderr.writeln('Erreur : ${e.message}');
     } catch (e) {
-      print('Erreur inattendue : $e');
+      stderr.writeln('Erreur inattendue : $e');
     }
   }
 }
@@ -83,19 +83,19 @@ Future<void> _addTaskFlow(TaskManager manager) async {
     urgencyReason: urgencyReason,
   );
 
-  print('Tâche créée avec succès [ID: ${task.id}]');
+  stdout.writeln('Tâche créée avec succès [ID: ${task.id}]');
 }
 
 Future<void> _listTasksFlow(TaskManager manager, SortStrategy sort) async {
   final tasks = await manager.listTasks(sort: sort);
   if (tasks.isEmpty) {
-    print('\nAucune tâche enregistrée.');
+    stdout.writeln('\nAucune tâche enregistrée.');
     return;
   }
 
-  print('\n--- Liste des Tâches (${sort.name}) ---');
+  stdout.writeln('\n--- Liste des Tâches (${sort.name}) ---');
   for (var task in tasks) {
-    print(task);
+    stdout.writeln(task);
   }
 }
 
@@ -103,12 +103,12 @@ Future<void> _completeTaskFlow(TaskManager manager) async {
   stdout.write('ID de la tâche terminée : ');
   final id = stdin.readLineSync()?.trim() ?? '';
   await manager.completeTask(id);
-  print('Tâche $id marquée comme terminée.');
+  stdout.writeln('Tâche $id marquée comme terminée.');
 }
 
 Future<void> _deleteTaskFlow(TaskManager manager) async {
   stdout.write('ID de la tâche à supprimer : ');
   final id = stdin.readLineSync()?.trim() ?? '';
   await manager.removeTask(id);
-  print('Tâche $id supprimée.');
+  stdout.writeln('Tâche $id supprimée.');
 }
