@@ -5,7 +5,9 @@ import 'package:task_cli/models/priority.dart';
 import 'package:task_cli/repositories/json_task_repository.dart';
 import 'package:task_cli/services/task_manager.dart';
 
-void main() async {
+/// Point d'entrée de l'application CLI. Démarre la boucle interactive
+/// de gestion des tâches.
+Future<void> runCli() async {
   final repo = JsonTaskRepository('tasks.json');
   final manager = TaskManager(repo);
 

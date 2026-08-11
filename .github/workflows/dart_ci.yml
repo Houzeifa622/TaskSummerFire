@@ -1,0 +1,26 @@
+name: task_cli_ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Récupérer les dépendances
+        run: dart pub get
+
+      - name: Analyse statique
+        run: dart analyze
+
+      - name: Tests unitaires
+        run: dart test

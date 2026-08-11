@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import '../exceptions/task_exceptions.dart';
-import '../models/standard_task.dart';
 import '../models/task.dart';
-import '../models/urgent_task.dart';
 import 'repository_interface.dart';
 
 class JsonTaskRepository implements Repository<Task> {
@@ -30,11 +28,7 @@ class JsonTaskRepository implements Repository<Task> {
 
       final List<dynamic> jsonList = jsonDecode(content) as List<dynamic>;
       return jsonList.map((item) {
-        final map = item as Map<String, dynamic>;
-        if (map['type'] == 'urgent') {
-          return UrgentTask.fromJson(map);
-        }
-        return StandardTask.fromJson(map);
+        return Task.fromJson(item as Map<String, dynamic>);
       }).toList();
     } catch (e) {
       throw StorageException('Échec de la lecture du fichier : $e');

@@ -11,6 +11,7 @@ class StandardTask extends Task {
   });
 
   @override
+  // Une tâche standard est urgente dès lors que sa priorité est élevée.
   bool get isUrgent => priority == Priority.high;
 
   @override

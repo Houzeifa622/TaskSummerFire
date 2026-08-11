@@ -1,4 +1,6 @@
 import 'priority.dart';
+import 'standard_task.dart';
+import 'urgent_task.dart';
 
 abstract class Task {
   final String id;
@@ -14,6 +16,15 @@ abstract class Task {
     this.dueDate,
     this.isCompleted = false,
   });
+
+  /// Désérialise une tâche depuis son JSON selon son champ `type`.
+  /// `standard` produit une [StandardTask], `urgent` une [UrgentTask].
+  factory Task.fromJson(Map<String, dynamic> json) {
+    if (json['type'] == 'urgent') {
+      return UrgentTask.fromJson(json);
+    }
+    return StandardTask.fromJson(json);
+  }
 
   // Méthode abstraite pour déterminer l'urgence métier
   bool get isUrgent;

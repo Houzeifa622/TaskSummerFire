@@ -9,8 +9,16 @@ enum SortStrategy { priority, dueDate }
 
 class TaskManager {
   final Repository<Task> repository;
+  static int _idCounter = 0;
 
   TaskManager(this.repository);
+
+  /// Génère un identifiant unique : timestamp en microsecondes complété
+  /// par un compteur incrémental pour éviter les collisions.
+  String _generateId() {
+    final timestamp = DateTime.now().microsecondsSinceEpoch.toString();
+    return '$timestamp-${_idCounter++}';
+  }
 
   Future<Task> addTask({
     required String title,
@@ -22,7 +30,7 @@ class TaskManager {
       throw InvalidTaskDataException('Le titre ne peut pas être vide.');
     }
 
-    final id = DateTime.now().millisecondsSinceEpoch.toString().substring(7);
+    final id = _generateId();
 
     final Task task = (urgencyReason != null && urgencyReason.trim().isNotEmpty)
         ? UrgentTask(id: id, title: title, urgencyReason: urgencyReason, dueDate: dueDate)
